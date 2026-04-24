@@ -133,19 +133,19 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
 
             <li class="lsec-s-li">A. Dynamiques locales</li>
 
-            <li class="li active" data-layer="layer-rouge">
+            <li class="li inactive" data-layer="layer-rouge">
               <div class="sw" style="background:#d62828;border:1px solid #900;"></div>
               <span>Russie très intégrée</span>
             </li>
-            <li  class="li active" data-layer="layer-orange">
+            <li  class="li inactive" data-layer="layer-orange">
               <div class="sw" style="background:#f07a10;border:1px solid #b05000;"></div>
               <span>Russie moyennement intégrée</span>
             </li>
-            <li class="li active" data-layer="layer-jaune">
+            <li class="li inactive" data-layer="layer-jaune">
               <div class="sw" style="background:#f5c800;border:1px solid #aa8800;"></div>
               <span>Russie peu intégrée</span>
             </li>
-            <li class="li active" data-layer="layer-metropoles">
+            <li class="li inactive" data-layer="layer-metropoles">
               <div class="sym">
                 <svg width="28" height="16" viewBox="0 0 28 16">
                   <circle cx="8" cy="8" r="6" fill="#cc0000" stroke="#111" stroke-width="1.5"/>
@@ -154,7 +154,7 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
               </div>
               <span>Métropoles</span>
             </li>
-            <li class="li active" data-layer="layer-villes">
+            <li class="li inactive" data-layer="layer-villes">
               <div class="sym">
                 <svg width="28" height="16" viewBox="0 0 28 16">
                   <circle cx="14" cy="8" r="5" fill="#0000dd" stroke="#0000dd" stroke-width="1"/>
@@ -165,7 +165,7 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
 
             <li class="lsec-s-li">B. Espaces connectés au monde</li>
 
-            <li class="li active" data-layer="layer-maritime">
+            <li class="li inactive" data-layer="layer-maritime">
               <div class="sym">
                 <svg width="28" height="16" viewBox="0 0 28 16">
                   <defs>
@@ -182,7 +182,7 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
               </div>
               <span>Interface maritime</span>
             </li>
-            <li class="li active" data-layer="layer-transfrontalier">
+            <li class="li inactive" data-layer="layer-transfrontalier">
               <div class="sym">
                 <svg width="28" height="16" viewBox="0 0 28 16">
                   <defs>
@@ -212,16 +212,16 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
 
           <ul class="elements-legende" style="list-style:none; padding:0; margin:0;">
 
-            <li class="li active" data-layer="layer-cei">
+            <li class="li inactive"  data-layer="layer-cei">
               <div class="sw" style="background:transparent;border:2.5px dashed #e0187a;"></div>
               <span>CEI</span>
             </li>
-            <li class="li active" data-layer="layer-ocs">
+            <li class="li inactive" data-layer="layer-ocs">
               <div class="sw" style="background:repeating-linear-gradient(45deg,#e8a800,transparent 2px,transparent 3px,transparent 7px);border:1px solid #c8a000;"></div>
               <span>OCS</span>
             </li>
             </li>
-            <li class="li active" data-layer="layer-brics">
+            <li class="li inactive" data-layer="layer-brics">
               <div class="sw" style="background:#6300a56c;border:2.5px solid #6300a5;"></div>
               <span>BRICS</span>
             </li>
@@ -238,15 +238,15 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
 
             <li class="lsec-s-li">A. Régionales</li>
 
-            <li class="li" data-layer="layer-ukraine">
+            <li class="li inactive" data-layer="layer-ukraine">
               <div class="sw" style="background:#42c011;border:1px solid #000000;"></div>
               <span>Guerre avec l'Ukraine</span>
             </li>
-            <li class="li" data-layer="layer-georgie">
+            <li class="li inactive" data-layer="layer-georgie">
               <div class="sw" style="background:#69380e;border:1px solid #000000;"></div>
               <span>Retrait de la Géorgie (CEI)</span>
             </li>
-            <li class="li" data-layer="layer-litiges">
+            <li class="li inactive" data-layer="layer-litiges">
               <div class="sym">
               <svg width="14" height="14" viewBox="0 0 24 24">
                 <polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9" fill="#f07a10" stroke="#f07a10" stroke-width="1"/>
@@ -278,8 +278,6 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
   });
 
   // --- Nouveau script : audio + affichage progressif ---
-
-  // Définissez l'ordre d'apparition des couches par partie
   const couches = {
     1: ['layer-rouge', 'layer-orange', 'layer-jaune', 'layer-metropoles', 
         'layer-villes', 'layer-maritime', 'layer-transfrontalier'],
@@ -307,12 +305,26 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
       if (el) el.style.display = 'none';
     });
 
-    // Affiche les couches progressivement
+    // ✅ Remet tous les li en inactif
+    document.querySelectorAll('.li[data-layer]').forEach(li => {
+      li.classList.remove('active');
+      li.classList.add('inactive');
+    });
+
+    // Affiche les couches progressivement + active la légende au bon moment
     couches[num].forEach((id, index) => {
       const delai = delais[num][index] ?? (index * 1200);
       setTimeout(() => {
+        // Affiche la couche sur la carte
         const el = document.getElementById(id);
         if (el) el.style.display = '';
+
+        // ✅ Active l'élément de légende correspondant
+        const li = document.querySelector(`.li[data-layer="${id}"]`);
+        if (li) {
+          li.classList.remove('inactive');
+          li.classList.add('active');
+        }
       }, delai);
     });
 
@@ -323,12 +335,11 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
       audio.play();
     } else {
       if (num === 1) {
-      const audio = new Audio('partie1.m4a');
-      window._audioEnCours = audio;
-      audio.play();
+        const audio = new Audio('partie1.m4a');
+        window._audioEnCours = audio;
+        audio.play();
       } else {
         const textes = {
-          1: "Partie 1. Intégration dans la mondialisation...",
           3: "Partie 3. Espaces sous tensions..."
         };
         function parler() {
@@ -348,8 +359,6 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
       }
     }
   }
-
-  
 </script>
 </body>
 </html>
