@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+  <!-- Réalisé par Maëwenn BOULNOIS -->
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -116,11 +117,18 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
               <polygon points="0,-10 2.9,-4 9.5,-3.1 4.8,1.5 5.9,8.1 0,5 -5.9,8.1 -4.8,1.5 -9.5,-3.1 -2.9,-4"
                 fill="#f07a10" stroke="#f07a10" stroke-width="1"/></g>
           </g>
+          <g id="layer-otan" style="display:none;">
+            <image href="otan.png" 
+              x="0" y="0" width="1540" height="999"/>
+          </g>
         </svg>
       </div>
     </div>
-
       <div class="legend-col">
+        <div style="font-size: 15px">
+          <p style="color:#00C3FF"><strong><u>Pour commencer cliquez ici</u></strong></p>
+          <a style="color:#fafaf5" href="https://boutiquephotographique.com/wp-content/uploads/2024/03/Joyeuse-Paques-Fleurs-et-oeufs-1024x610.jpg">easter egg</a>
+        </div>
         <div class="ltitle">Légende</div>
 
         <!-- PARTIE 1 -->
@@ -252,11 +260,14 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
                 <polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9" fill="#f07a10" stroke="#f07a10" stroke-width="1"/>
               </svg></div>
               <span>Litige frontalier</span>
-              
             </li>
 
             <li class="lsec-s-li">B. Mondiales</li>
 
+            <li class="li inactive" data-layer="layer-otan">
+              <div class="sw" style="background: #a41500;border:1px solid #000000;"></div>
+              <span>Pays de l'OTAN</span>
+            </li>
           </ul>
         </div>
 
@@ -282,13 +293,13 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
     1: ['layer-rouge', 'layer-orange', 'layer-jaune', 'layer-metropoles', 
         'layer-villes', 'layer-maritime', 'layer-transfrontalier'],
     2: ['layer-cei', 'layer-ocs','layer-brics'],
-    3: ['layer-ukraine', 'layer-georgie', 'layer-litiges']
+    3: ['layer-ukraine', 'layer-georgie', 'layer-litiges','layer-otan']
   };
 
   const delais = {
     1: [16000, 38000, 49000, 6000, 9000, 29500, 21000],
     2: [9000, 28000, 44500],
-    3: [500, 2000, 5000]
+    3: [18000, 34000, 47000, 64000]
   };
 
   function lancerPartie(num) {
@@ -329,36 +340,24 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
     });
 
     // ---- AUDIO ----
-    if (num === 2) {
+    if (num === 1) {
+      const audio = new Audio('partie1.m4a');
+      window._audioEnCours = audio;
+      audio.play();
+    } else if (num === 2) {
       const audio = new Audio('partie2.m4a');
       window._audioEnCours = audio;
       audio.play();
-    } else {
-      if (num === 1) {
-        const audio = new Audio('partie1.m4a');
-        window._audioEnCours = audio;
-        audio.play();
-      } else {
-        const textes = {
-          3: "Partie 3. Espaces sous tensions..."
-        };
-        function parler() {
-          const utterance = new SpeechSynthesisUtterance(textes[num]);
-          utterance.lang = 'fr-FR';
-          utterance.rate = 0.95;
-          const voixChoisie = window.speechSynthesis.getVoices()
-            .find(v => v.name === "French (Switzerland)+Henrique");
-          if (voixChoisie) utterance.voice = voixChoisie;
-          window.speechSynthesis.speak(utterance);
-        }
-        if (window.speechSynthesis.getVoices().length === 0) {
-          window.speechSynthesis.onvoiceschanged = parler;
-        } else {
-          parler();
-        }
-      }
+    } else if (num === 3) {
+      const audio = new Audio('partie3.m4a');
+      window._audioEnCours = audio;
+      audio.play();
     }
   }
 </script>
 </body>
+<!-- Réalisé par Maëwenn BOULNOIS -->
+<footer>
+  <p style="font-size: 5px">Réalisé par Maëwenn BOULNOIS</p>
+</footer>
 </html>
