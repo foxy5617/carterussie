@@ -291,7 +291,7 @@ h1{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:#1
   document.getElementById('intro-clic').addEventListener('click', () => {
     window.speechSynthesis.cancel();
     
-    const texte = "Voici une carte de la Russie interactive, elle traite de sa position dans la mondialisation. Pour afficher un élement, cliquez sur sa légende et il apparaitra sur la carte. Si vous voulez un complément d'information, cliquez sur le titre d'une partie. Vous aurez une explication allant avec les items de cette partie qui s'afficheront automatiquement sur la carte.";
+    const texte = "Voici une carte de la Russie interactive, elle traite de sa position dans la mondialisation. Pour afficher un élément, cliquez sur sa légende et il apparaitra sur la carte. Si vous voulez un complément d'information, cliquez sur le titre d'une partie. Vous aurez une explication allant avec les items de cette partie qui s'afficheront automatiquement sur la carte.";
     
     function parler() {
       const utterance = new SpeechSynthesisUtterance(texte);
